@@ -8,8 +8,24 @@
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>践行，成长，记录。</description>
-    <pubDate>Tue, 28 Feb 2017 11:55:48 GMT</pubDate>
+    <pubDate>Sat, 04 Mar 2017 03:50:11 GMT</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title>两段简短的对话</title>
+      <link>http://yoursite.com/2017/03/04/%E4%B8%A4%E6%AE%B5%E7%AE%80%E7%9F%AD%E7%9A%84%E5%AF%B9%E8%AF%9D/</link>
+      <guid>http://yoursite.com/2017/03/04/%E4%B8%A4%E6%AE%B5%E7%AE%80%E7%9F%AD%E7%9A%84%E5%AF%B9%E8%AF%9D/</guid>
+      <pubDate>Fri, 03 Mar 2017 16:00:00 GMT</pubDate>
+      <description>
+      
+        &lt;p&gt;##两段简短的对话&lt;br&gt;@(A-01日记)[写作]&lt;/p&gt;
+&lt;p&gt;“咱们学校的地标性建筑是什么？”&lt;br&gt;“母校之光”&lt;br&gt;“毛爷爷”&lt;br&gt;……..&lt;br&gt;“错，是贵州大厦”。&lt;/p&gt;
+&lt;p&gt;这是一段令人匪夷所思的一个对话，当然也是搞笑的，但是不可否认如何最快的找到自
+      
+      </description>
+      
+      <comments>http://yoursite.com/2017/03/04/%E4%B8%A4%E6%AE%B5%E7%AE%80%E7%9F%AD%E7%9A%84%E5%AF%B9%E8%AF%9D/#disqus_thread</comments>
+    </item>
     
     <item>
       <title>为什么我们总是这么喜欢节假日出去游玩？</title>
@@ -285,21 +301,6 @@
       </description>
       
       <comments>http://yoursite.com/2016/09/15/%E6%88%91%E4%BB%AC%E7%9A%84318%E2%80%94%E9%AA%91%E8%A1%8C%E6%97%A5%E5%BF%97/#disqus_thread</comments>
-    </item>
-    
-    <item>
-      <title>我们的318</title>
-      <link>http://yoursite.com/2016/08/16/%E6%88%91%E4%BB%AC%E7%9A%84318/</link>
-      <guid>http://yoursite.com/2016/08/16/%E6%88%91%E4%BB%AC%E7%9A%84318/</guid>
-      <pubDate>Tue, 16 Aug 2016 13:11:00 GMT</pubDate>
-      <description>
-      
-        &lt;p&gt;21天，2000多km，这就是我们的318。&lt;/p&gt;
-&lt;p&gt;当我们真的到达了最后一块界碑4632的时候，我知道我们的骑行真的结束了，我们真的到达了拉萨，真的见到了梦想中的布达拉宫，那一天，在夕阳的映照下，穿过拉萨河，穿过桥，走过4km的距离，远远地看到了布达拉宫，那是多么的
-      
-      </description>
-      
-      <comments>http://yoursite.com/2016/08/16/%E6%88%91%E4%BB%AC%E7%9A%84318/#disqus_thread</comments>
     </item>
     
   </channel>
