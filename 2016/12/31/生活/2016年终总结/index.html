@@ -100,7 +100,7 @@
 现在我就以下面几大主题展开，分别是个人成长，包括阅读，写作；生活方面，包括娱乐，电影，音乐等；工作（兼职）；兴趣爱好；以及这一年来做的一些比较有意义的事情，同时记录下自己这一年来走过的一些坑，明年该吸取的一些经验等等。
 毕竟自">
 <meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/%E6%88%90%E9%83%BD%E5%87%BA%E5%8F%91%E5%89%8D.JPG">
-<meta property="og:updated_time" content="2017-04-15T05:34:14.867Z">
+<meta property="og:updated_time" content="2017-04-16T07:42:06.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2016年终总结">
 <meta name="twitter:description" content="2016年终总结2016年不知不觉就这样又过去了，时间过得真的好快啊！大三上学期就这样流逝了，是时候该回顾一下了，毕竟一整年该看看自己有哪些得失，哪些成果，又有哪些成长了。
@@ -407,17 +407,6 @@
 
           
           
-             <span id="/2016/12/31/生活/2016年终总结/" class="leancloud_visitors" data-flag-title="2016年终总结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
 
@@ -684,6 +673,44 @@
         
 
         <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="" target="_blank" title="social">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  social
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kevynchen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/99kf" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/chen-kai-fan-1" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
           
         </div>
 
@@ -1006,113 +1033,6 @@
   
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
-  <script>AV.initialize("cNHUf9hIwXtGLyUVg6vfkNIM-gzGzoHsz", "4CU796dqnEfOWl4HC2qw0Rnz");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
 
   
 
