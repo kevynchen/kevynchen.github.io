@@ -1,19 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>陈开帆</title>
+  <title>Chenkaifan&#39;s Blog</title>
   <subtitle>学习学习再学习</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-05-05T14:08:01.951Z</updated>
+  <updated>2017-07-24T03:16:45.174Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
-    <name>陈开帆</name>
+    <name>kaifanchen</name>
     
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>数据可视化之上篇（R for Data Science之翻译）</title>
+    <link href="http://yoursite.com/2017/07/23/R_for_data_science_translation/"/>
+    <id>http://yoursite.com/2017/07/23/R_for_data_science_translation/</id>
+    <published>2017-07-22T16:00:00.000Z</published>
+    <updated>2017-07-24T03:16:45.174Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="数据可视化之上篇（R-for-Data-Science之翻译）"><a href="#数据可视化之上篇（R-for-Data-Science之翻译）" class="headerlink" title="数据可视化之上篇（R for Data Science之翻译）"></a>数据可视化之上篇（R for Data Science之翻译）</h1><p>本文主要翻译R for Data Science这本书的第三章，可视化（ggplot2）部分内容。翻译原文在这里：<a href="http://r4ds.had.co.nz/data-visualisation.html" target="_blank" rel="external">Data visualisation</a>，其中3.1节到3.2节为手工翻译，后面的为谷歌翻译加人工修改，自己翻译打字一方面有些慢，另一方面有工具不用干嘛。不过自己翻译起来，怎么都觉得不通顺，但是谷歌翻译虽然有一点点小问题，但是也省了很多的精力。本文限于原文比较长，将分为上下篇进行翻译。</p>
+<h2 id="第三节-数据可视化"><a href="#第三节-数据可视化" class="headerlink" title="第三节  数据可视化"></a>第三节  数据可视化</h2><h2 id="3-1-介绍"><a href="#3-1-介绍" class="headerlink" title="3.1 介绍"></a>3.1 介绍</h2><blockquote>
+<p>对于数据分析师来说，简单的图形能够比其他的东西带来更多的信息。——John Tukey</p>
+</blockquote>
+<p>这一章将教会你如何利用 ggplot2 来可视化你的数据。R 有多种工具可以用来制作图形，但是ggplot2 是其中一个最优雅和最通用的包。ggplot2 提供了图形化的语法，它是一个连贯系统使得你可以介绍和制作你的图形。利用ggplot2，你可以通过学习一个知识来做的更快，并且将它应用到多种地方。</p>
+<p>如果你想在你开始学习ggplot2 的时候，了解更多关于它的理论知识，我建议你读这篇文章，<a href="http://vita.had.co.nz/papers/layered-grammar.pdf" target="_blank" rel="external">“The Layered Grammar of Graphics”</a></p>
+<h3 id="3-1-1-准备条件"><a href="#3-1-1-准备条件" class="headerlink" title="3.1.1 准备条件"></a>3.1.1 准备条件</h3><p>这一章我们将专注于ggplot2，它是 tidyverse 的一个核心成员。为了使用ggplot2的数据，help页面，和本章我们将要使用的函数，首先我们需要通过下面的代码来加载 tidyverse：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">library(tidyverse)</div><div class="line">#&gt; Loading tidyverse: ggplot2</div><div class="line">#&gt; Loading tidyverse: tibble</div><div class="line">#&gt; Loading tidyverse: tidyr</div><div class="line">#&gt; Loading tidyverse: readr</div><div class="line">#&gt; Loading tidyverse: purrr</div><div class="line">#&gt; Loading tidyverse: dplyr</div><div class="line">#&gt; Conflicts with tidy packages ----------------------------------------------</div><div class="line">#&gt; filter(): dplyr, stats</div><div class="line">#&gt; lag():    dplyr, stats</div></pre></td></tr></table></figure>
+<p>这一行代码加载了tidyverse；也就是那些你几乎在每一个数据分析中都会使用的包都被加载到R中，同时它也会告诉你哪些函数与R的原本的函数冲突了（或者是来自于其他的已经加载的包）。</p>
+<p>如果你在运行这个代码的时候，得到了一个这样的错误信息“there is no package called ‘tidyverse’”，那你需要先下载这个包，再重新运行<code>library()</code>就可以了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">install.packages(&quot;tidyverse&quot;)</div><div class="line">library(tidyverse)</div></pre></td></tr></table></figure></p>
+<p>你只需要安装一次这个包就可以了，但是以后你每次使用的时候都得重新加载它。</p>
+<p>如果你需要精确一下函数或者数据都是从哪里来的，你可以使用特别的格式，像这样<code>package::function()</code>。比如，<code>ggplot2::ggplot()</code> 会精确地告诉你这是从ggplot2包那里引用的函数<code>ggplot()</code>。</p>
+<h2 id="3-2-第一步"><a href="#3-2-第一步" class="headerlink" title="3.2 第一步"></a>3.2 第一步</h2><p>让我们用我们的第一个图形来问一个问题：那些拥有大引擎的汽车会比那些有小引擎的汽车更耗油吗？你可能心中已经有了一个答案，但是得尝试一下让你的答案更精确一些。汽车引擎的大小和耗油效率之间的关系是怎样的呢？是正相关，负相关，线性，还是非线性的关系呢？</p>
+<h3 id="3-2-1-mpg-数据框"><a href="#3-2-1-mpg-数据框" class="headerlink" title="3.2.1 mpg 数据框"></a>3.2.1 <code>mpg</code> 数据框</h3><p>你可以测试一下你的答案，利用ggplot2里面的<code>mpg</code> 数据框（又叫做<code>ggplot2::mpg</code>）。数据框是一个长方形的组合（注：像表格一样），列为一系列的变量，行为观测值。<code>mpg</code>里面包含了美国环保局关于38种汽车模型的观测数据。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">mpg</div><div class="line">#&gt; # A tibble: 234 × 11</div><div class="line">#&gt;   manufacturer model displ  year   cyl      trans   drv   cty   hwy    fl</div><div class="line">#&gt;          &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt;      &lt;chr&gt; &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;</div><div class="line">#&gt; 1         audi    a4   1.8  1999     4   auto(l5)     f    18    29     p</div><div class="line">#&gt; 2         audi    a4   1.8  1999     4 manual(m5)     f    21    29     p</div><div class="line">#&gt; 3         audi    a4   2.0  2008     4 manual(m6)     f    20    31     p</div><div class="line">#&gt; 4         audi    a4   2.0  2008     4   auto(av)     f    21    30     p</div><div class="line">#&gt; 5         audi    a4   2.8  1999     6   auto(l5)     f    16    26     p</div><div class="line">#&gt; 6         audi    a4   2.8  1999     6 manual(m5)     f    18    26     p</div><div class="line">#&gt; # ... with 228 more rows, and 1 more variables: class &lt;chr&gt;</div></pre></td></tr></table></figure></p>
+<p>在<code>mpg</code>的这些变量中：</p>
+<ol>
+<li><code>displ</code>，表示汽车的引擎大小，单位为升。</li>
+<li><code>hwy</code>，汽车的最高燃油效率，单位为每加仑的英里数(<code>mpg</code>)。一辆燃油效率很低的汽车比一辆燃油效率高的汽车耗油更多，当它们行驶相同的距离的时候。</li>
+</ol>
+<p>想了解更多关于<code>mpg</code>的知识，通过<code>?mpg</code>查找即可。</p>
+<h3 id="3-2-2-创建ggplot图表"><a href="#3-2-2-创建ggplot图表" class="headerlink" title="3.2.2 创建ggplot图表"></a>3.2.2 创建ggplot图表</h3><p>创建<code>mpg</code>图表，可以运行下面的代码把<code>displ</code>放到x 轴上，把<code>hwy</code>放到y 轴上。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy))</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-18-1.png" alt=""></p>
+<p>上面这个图展示了引擎大小(<code>displ</code>)和燃油效率(<code>hwy</code>)之间是一个负相关的关系。换句话说，那些有大引擎的汽车耗油更多。这个是否能够验证或者反驳你关于引擎大小和燃油效率之间关系的猜想吗？</p>
+<p>利用ggplot2包，你可以用<code>ggplot()</code>函数来画图。<code>ggplot()</code>可以创建一个坐标系统，在上面你可以添加各种图层。<code>ggplot()</code>的第一个参数是你要使用哪些数据来画图，所以<code>ggplot(data = mpg)</code>创建了一个空白的图形，但是这的确没什么意思所以在这里我就不展示给你们看了。</p>
+<p>你可以通过增加一个或者多个图层到<code>ggplot()</code>来完成你的图形。这个函数<code>geom_point()</code>是增加一个点图层到你的图形上面的，它会产生一个散点图。ggplot2 本身自带了很多的geom 函数，每一个都可以添加各种不同的图层到图形上面。通过本章，你可以学习到很多这样的函数。</p>
+<p>在ggplot2里的每个geom函数都自带有一个<code>mapping</code>参数。这定义了你数据里的变量是如何被布局以展现它的可视化的属性。这个<code>mapping</code>参数常常和<code>aes()</code>成对出现，同时<code>aes()</code>里面的<code>x</code>和<code>y</code>参数也指定了哪些变量是被布局到x轴和y轴的。ggplot2 会找到哪些在<code>data</code>参数里被布局的变量，在这个例子中，是<code>mpg</code>。</p>
+<h3 id="3-2-3-一个图形模板"><a href="#3-2-3-一个图形模板" class="headerlink" title="3.2.3 一个图形模板"></a>3.2.3 一个图形模板</h3><p>让我们把这个代码转换成可重复使用的模板，这个模板可以用ggplot2来制作图表。要做一个图表，我们替换下面代码括号部分的内容即可，即替换数据来源dataset，geom 函数，或者一系列的mappings的集合。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = &lt;DATA&gt;) +</div><div class="line">  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;))</div></pre></td></tr></table></figure></p>
+<p>本章的其余部分将告诉你如何完成并扩展该模板，从而制作不同类型的图形。我们将从<code>&lt;MAPPINGS&gt;</code>组成部分开始。</p>
+<h3 id="3-2-4-练习"><a href="#3-2-4-练习" class="headerlink" title="3.2.4 练习"></a>3.2.4 练习</h3><ol>
+<li>运行<code>ggplot(data = mpg)</code>。你看到了什么？</li>
+<li>在<code>mpg</code>有多少行？有多少列？</li>
+<li>什么是<code>drv</code>变量描述？阅读帮助<code>?mpg</code>找出来。</li>
+<li>制作一个关于<code>hwy</code> VS <code>cyl</code>的散点图。</li>
+<li>如果你做一个<code>class</code> VS <code>drv</code>的散点图，那么会发生什么？为什么这个图没什么用吗？</li>
+</ol>
+<h2 id="3-3-美学映射"><a href="#3-3-美学映射" class="headerlink" title="3.3 美学映射"></a>3.3 美学映射</h2><blockquote>
+<p>“照片的最大的价值在于，它能够迫使我们去注意那些我们从来没有想过去看的东西。” ——John Tukey</p>
+</blockquote>
+<p>在下面的图中，一个组的点（红色高亮显示）看起来是在下降的线性趋势的外部。这些车有更高的里程比你想象的。你如何解释这些车？</p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-6-1.png" alt=""></p>
+<p>我们推测这种车是混合动力车。检验这一假设的一种方法是看每个车<code>class</code>值。<code>mpg</code>的数据里的<code>class</code>值将汽车分成了如下的几组车型，如结构紧凑的，中型的和 SUV 车型的。如果外围点（即刚刚红色高亮显示的点）是混合动力汽车，他们应该被归类为紧凑型轿车，或者也许是小型汽车（记住这个数据是在混合动力卡车和SUV流行之前就已经被收集了）。</p>
+<p>您可以添加第三个变量，像<code>class</code>,用它来美化二维散点图。在你的图形中，美学是你的对象的可视化属性。美学包括像大小，形状，或者点的颜色。通过改变它的美学属性的值，你可以用不同的方式来显示一个点（如下图中所示）。因为我们已经用了“value”来形容数据，所以在这里我们就用“level”来形容美学属性。在这里，我们改变一个点的大小，形状和颜色的层次，使得点变小，变成三角形，或者蓝色：</p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-7-1.png" alt=""></p>
+<p>在你的图中，你可以通过布局美学到你的变量中（注：你的变量在图中以什么样的方式展现）来传递有关数据的信息。例如，您可以将点的颜色映射到<code>class</code>变量来揭示每辆车的类别。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy, color = class))</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-8-1.png" alt=""><br>（如果你喜欢英式英语，像 Hadley，你可以用 <code>colour</code> 代替 <code>color</code>。）</p>
+<p>要映射一个美学到一个变量中，我们可以把美学的名称与变量的名称通过<code>aes()</code>关联起来。ggplot2 将自动分配一个美学层级（这里唯一的颜色）到每一个独特的变量值，这个进程被熟知为<code>scaling</code>。ggplot2 还将添加一个图例来说明哪个层级对应于哪个值。</p>
+<p>刚刚的颜色显示出来的是，许多异常的点是双座车。这些车看起来不像混合动力车，事实上，它是跑车！跑车像 SUV 和皮卡车那样有大的引擎，但是像中型和紧凑型轿车那样有很小的车身，从而可以提高他们的燃油效率。现在回想起来，这些车都不太可能是混合动力车，因为他们拥有大型发动机。</p>
+<p>在上面的例子中，我们映射<code>class</code>值到色彩美学上，但我们也可以用相同的方式映射<code>class</code>到尺寸的美学上。在这种情况下，每个点的确切大小将展示它的车型类别。在这里，我们得到了一个警告，因为映射无序的变量（<code>class</code>）到一个有序的美学（<code>size</code>）不是一个好主意。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy, size = class))</div><div class="line">#&gt; Warning: Using size for a discrete variable is not advised.</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-9-1.png" alt=""></p>
+<p>或者，我们可以映射<code>class</code>到透明度的属性上，它可以控制点的透明度，或者点的形状。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># Left</div><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy, alpha = class))</div><div class="line"></div><div class="line"># Right</div><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy, shape = class))</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-10-1.png" alt=""><br><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-10-2.png" alt=""></p>
+<p>上图中SUV到底发生了什么事？原来是ggplot2 在同一时间只会可以引用六个形状。默认情况下，当您使用外形美观来画图的时候，多余的组会处于看不见的状态（注：只有六个形状）。</p>
+<p>对于每一个美学属性，你使用<code>aes()</code>来关联美学的名字和要展示的变量。这个<code>aes()</code>函数将每一个层中使用的美学映射汇聚起来，并将它们传递到各层的映射参数中。语法强调一个有益的提示关于 x 和 y ：x 和 y 的位置是它们自己的美学属性，视觉属性是你可以映射变量到要显示数据的有关的信息。</p>
+<p>一旦你映射一个美学属性，ggplot2 会负责剩下的东西。它会选择一个合理的规模来与美学配合，并且它会构造一个说明水平和值之间的映射图例（原文：it constructs a legend that explains the mapping between levels and values）。对于x和y美学，ggplot2 不创建图例，但它创建具有刻度标记和标签的轴线。轴线充当图例; 它解释了位置和值之间的映射。</p>
+<p>您也可以设置手动你的geom的美学属性。例如，我们可以让所有的点在我们的图中变蓝：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy), color = &quot;blue&quot;)</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-11-1.png" alt=""></p>
+<p>在这里，颜色不传达一个变量的信息，而是只改变了图的外观。未来能够手动设置美学树形，你可以通过geom函数的参数来设置美学属性的名称; 。即它是在<code>aes()</code>函数的外面。你需要挑选一个值，且对于美学来说是有意义的：(注：下面是本段原文)</p>
+<blockquote>
+<p>Here, the color doesn’t convey information about a variable, but only changes the appearance of the plot. To set an aesthetic manually, set the aesthetic by name as an argument of your geom function; i.e. it goes outside of aes(). You’ll need to pick a value that makes sense for that aesthetic:</p>
+</blockquote>
+<ul>
+<li>颜色的名字是一个字符串的类型。</li>
+<li>点的大小是以毫米来作为单位的。</li>
+<li>点的形状是用数字来表示的，如图3.1所示。</li>
+</ul>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/shapes-1.png" alt=""></p>
+<p>图3.1：R已经内置了25种由数字编号标识的形状。有一些形状看起来是重复的：例如，0，15，和22都是方形。所不同的是来自于<code>colour</code>和<code>fill</code>参数之间的互相作用。中空形状（0-14）具有由<code>colour</code>确定的边框; 固体形状（15-18）中填充有<code>colour</code>; 填充形状（21-24）有一个<code>colour</code>边界，并充满<code>fill</code>颜色。</p>
+<h3 id="3-3-1-练习"><a href="#3-3-1-练习" class="headerlink" title="3.3.1 练习"></a>3.3.1 练习</h3><ol>
+<li>下面的代码是出了什么错？为什么它的点并没有变蓝？<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy, color = &quot;blue&quot;))</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-12-1.png" alt=""></p>
+<ol>
+<li>在<code>mpg</code>中哪些变量是分类的？哪些变量是连续的？（提示：输入<code>?mpg</code>来读取所述数据集的文档）。当你运行<code>mpg</code>时，你看到了些什么？</li>
+<li>映射一个连续变量到<code>color</code>，<code>size</code>和<code>shape</code>中。对于分类 vs. 连续变量，这些美学的不同是如何表现的？</li>
+<li>如果你映射同一变量到多个美学属性中会发生什么？</li>
+<li><code>stroke</code>美学是用来做什么的呢？它采用哪些形状？（提示：使用<code>?geom_point</code>）</li>
+<li>如果你映射一个美学属性到一个不是变量名以外的东西，比如<code>aes(colour = displ &lt; 5)</code>，那么会发生什么？</li>
+</ol>
+<h2 id="3-4-常见问题"><a href="#3-4-常见问题" class="headerlink" title="3.4 常见问题"></a>3.4 常见问题</h2><p>当你开始运行R代码的时候，你可能会遇到问题。别担心，每个人都会有这种情况出现。我写R代码已经很多年了，但我每天仍然会写出无法工作的代码！</p>
+<p>一开始的时候，仔细对比你正在运行的代码与书中的代码。R是非常挑剔的，一个错位的字符可以产生完全不同的差异。确保每一个<code>(</code>和<code>)</code>相匹配，每个<code>&quot;</code>配对与另一个<code>&quot;</code>。有时你运行的代码，并没有任何反应。检查您的手边的命令控制台：如果它是<code>+</code>号的话，则意味着R不认为你输入一个完整的表达，它一直等着你去完成它。在这种情况下，通过按 ESCAPE 键放弃处理当前命令进程，它通常是很容易从头开始的，。</p>
+<p>当创建ggplot2 图形时，一个常见问题是将<code>+</code>放在错误的地方：它必须放在一行的结束，而不是在一行的开始。换句话说，请确保您不小心写出这样的代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg)</div><div class="line">+ geom_point(mapping = aes(x = displ, y = hwy))</div></pre></td></tr></table></figure></p>
+<p>如果你仍然有困惑，请尝试请求帮助。您可以运行任何一个R函数通过<code>?function_name</code>从而在控制台上获取帮助，或选择函数名，然后再 RStudio 上按 F1。如果帮助页面似乎没有什么帮助的话，不要担心，直接跳到例子，并寻找那些符合你的代码。</p>
+<p>如果那样还是没有任何帮助，请仔细阅读错误消息。有时，答案就在那里！但是当你是才刚刚学习R时，答案可能是在那些你无法理解的错误消息。另一位伟大的工具是谷歌：尝试用谷歌搜索错误消息，因为很可能其他人也有同样的问题，并已得到在线帮助。</p>
+<h2 id="3-5-构面"><a href="#3-5-构面" class="headerlink" title="3.5 构面"></a>3.5 构面</h2><p>添加额外变量的方法之一是用美学的方法。另一种方式，对分类变量是特别有用的，它是将您的图分成几个小平面，每个副图展示数据的一个子集。</p>
+<p>由单一变量刻面的图形，使用<code>facet_wrap()</code>。<code>facet_wrap()</code>的第一个参数应该是一个公式，在那里你创建一个跟在<code>~</code>后的变量名称（这里是“公式”是R中的一个数据结构中的名称，而不是“方程式”的同义词）。你传递给<code>facet_wrap()</code>的变量应该是离散的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy)) +</div><div class="line">  facet_wrap(~ class, nrow = 2)</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-13-1.png" alt=""></p>
+<p>要刻面的两个变量的组合图形，你要添加<code>facet_grid()</code>到您的图形调用中。<code>facet_grid()</code>的第一个参数也是一个公式。这次的公式应包含由<code>~</code>分开的两个变量名。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy)) +</div><div class="line">  facet_grid(drv ~ cyl)</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/unnamed-chunk-14-1.png" alt=""><br>如果您不想在行或列的维度刻面，使用<code>.</code>代替一个变量名，比如<code>+ facet_grid(. ~ cyl)</code>。</p>
+<h3 id="3-5-1-练习"><a href="#3-5-1-练习" class="headerlink" title="3.5.1 练习"></a>3.5.1 练习</h3><p>1.如果你用一个连续变量刻面会发生什么？</p>
+<p>2.在图形<code>facet_grid(drv ~ cyl)</code>空白的地方代表了什么意思？它们与这幅图有什么关系？</p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = drv, y = cyl))</div></pre></td></tr></table></figure>
+<p>3.请问下面的代码会制作出什么样的图形？其中的<code>.</code>又做了什么？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy)) +</div><div class="line">  facet_grid(drv ~ .)</div><div class="line"></div><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy)) +</div><div class="line">  facet_grid(. ~ cyl)</div></pre></td></tr></table></figure>
+<p>4.（通过下面代码）制作本节的第一个刻面图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ggplot(data = mpg) +</div><div class="line">  geom_point(mapping = aes(x = displ, y = hwy)) +</div><div class="line">  facet_wrap(~ class, nrow = 2)</div></pre></td></tr></table></figure></p>
+<p>使用刻面，而不是颜色美学，有哪些优点？有哪些缺点？如果你有一个更大的数据集，其中的平衡会如何改变？</p>
+<p>5.阅读<code>?facet_wrap</code>。<code>nrow</code>做了什么？<code>ncol</code>又做了什么？还有其他的选项控制各个面板的布局吗？为什么<code>facet_grid()</code>没有<code>nrow</code>和<code>ncol</code>参数？</p>
+<p>6.当使用<code>facet_grid()</code>时，你通常应该把有更多水平的变量放到列中。为什么？（原文：When using facet_grid() you should usually put the variable with more unique levels in the columns. Why?）</p>
+<hr>
+<p>未完，待续，还有下篇。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;数据可视化之上篇（R-for-Data-Science之翻译）&quot;&gt;&lt;a href=&quot;#数据可视化之上篇（R-for-Data-Science之翻译）&quot; class=&quot;headerlink&quot; title=&quot;数据可视化之上篇（R for Data Science之翻译
+    
+    </summary>
+    
+    
+      <category term="R数据分析" scheme="http://yoursite.com/tags/R%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>看完《硅谷》美剧之后</title>
@@ -925,38 +1046,6 @@
     
       &lt;h2 id=&quot;静静地享受阳光的美好&quot;&gt;&lt;a href=&quot;#静静地享受阳光的美好&quot; class=&quot;headerlink&quot; title=&quot;静静地享受阳光的美好&quot;&gt;&lt;/a&gt;静静地享受阳光的美好&lt;/h2&gt;&lt;p&gt;@(A-01日记)&lt;/p&gt;
 &lt;p&gt;已经连续工作了11天了，今天早上醒来，发现
-    
-    </summary>
-    
-      <category term="生活" scheme="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>你走了，只是少了个复印的人而已</title>
-    <link href="http://yoursite.com/2017/01/20/%E7%94%9F%E6%B4%BB/%E4%BD%A0%E8%B5%B0%E4%BA%86%EF%BC%8C%E5%8F%AA%E6%98%AF%E5%B0%91%E4%BA%86%E4%B8%AA%E5%A4%8D%E5%8D%B0%E7%9A%84%E4%BA%BA%E8%80%8C%E5%B7%B2/"/>
-    <id>http://yoursite.com/2017/01/20/生活/你走了，只是少了个复印的人而已/</id>
-    <published>2017-01-19T16:00:00.000Z</published>
-    <updated>2017-02-28T05:56:21.402Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="你走了，只是少了个复印的人而已"><a href="#你走了，只是少了个复印的人而已" class="headerlink" title="你走了，只是少了个复印的人而已"></a>你走了，只是少了个复印的人而已</h2><p>@(A-01日记)</p>
-<p>想到这个话题，是因为今天中午的时候，一位老师需要正反面打印东西，但是她不会操作，于是问了一下旁边的实习生，但是很不恰巧，那个实习生她也不知道怎么操作；然后我突然就想到了曹将写过的一篇文章，应该是2015年写的文章。<a href="http://mp.weixin.qq.com/s?__biz=MzA5NTEzNzgyMA==&amp;mid=402486589&amp;idx=1&amp;sn=a1872665bfcf8677c85aa69b83c17c96&amp;scene=1&amp;srcid=1205Axp3m8mYJ51gOIr8PNLj#rd" target="_blank" rel="external">你走了，只是少了一个复印的人而已</a>，这是曹将的文章，我也想到了好像我也不会操作这个这么简单的东西，主要是自己也没接触过，不过这不是什么大问题，关键的问题是你的核心竞争力是什么，在猿辅导里面，老师和技术人员就是核心竞争力，就是这个企业的资产，而其他的部门其他的人员也只是作为一个辅助，或者干脆可以这么说，只要你稍微待上两天，只要认真，那肯定就能做好这些机械性的，无技术含量的工作。当然我不是说这些工作是无关紧要的，可以去掉的，恰恰不是，我所处的部门虽然是做课件，审课件，但是其实是属于市场部，销售类型的工作。所以，如果再无法利用这一段时间再学习一下，恐怕了解的不够深，不过是看到了一些表面现象罢了。</p>
-<p>关于核心竞争力，我不是没有想过，但是作为年轻的我们，现在只有积累，不断的积累，会打印机，你也得会各种繁琐性性的，无技术含量的工作，这些工作总该有人做，如果是你，不要悲伤，不要着急，先干，并且琢磨着干好才行，这是正确的成长之道吧。</p>
-<p>昨天晚上，路上下班回来的时候，不止一次地听到别人怎么说别人怎么牛逼，瞬间彻底又让我觉得别人都好厉害，但是我心里其实是很清楚的，你把时间花在哪里，你肯定哪些方面有所收获，<strong>我们还没能够到拼天赋的时候，无非就是克服自己的惰性，有耐心</strong>，这些已经足够我们把一些事情做好了。想想以前小的时候，我甚至连阿拉伯数字“8”都不会写的时候，我的妈妈是这么教我的，用两个0一组合起来于是就变成了一个“8”，但是人还是笨，还是不会写，后来索性就干脆被老师留在学校，那时候小，不懂事，一晃眼，现在也已经20岁了，这样的话，我好像能够看到自己的30岁，40岁，50岁是什么样的，说起来，人生还真是快啊！一眨眼，难道就结束了么？也不是，只是感知变快了。</p>
-<hr>
-<p>今天，也当然买好了火车票回家，无座，不过，这些都没关系，关系的是我的时间就这么地无端浪费掉至少5天。一直在路上，果真就在路上，所以，我是真心不想回家的。虽然那5天也不能用来干多少事情，但时间真的太宝贵了，我真的舍不得，但是为了回家看看，顺便与同学们小聚一下，见见好久没见的老朋友，呼吸一下新鲜的空气，没有雾霾的空气，享受一下短暂的蓝天，然后再苟且一般地回来这个熟悉而又陌生的地方，不知道多少人短暂地来到这里，然后又匆匆离去，好像过客一样。</p>
-<p>这无非是我们大部分人的宿命，有钱没钱还是回家过年，虽然并没觉得有什么意义，已经不是小孩子了，不会再那样盼着了，而反倒是不怎么希望着的吧。</p>
-<hr>
-<p>现在，我已经不知道该说些什么了，总觉的说多了，都是一些很肤浅的词，总归是自己阅历不足，却又把自己装的很深沉一样，偶尔两眼一发呆，然后陷入脑死路状态，看着光标一直在那里闪，半天不见有什么动静，想来想去，是不是今天还有什么事没干，或者干了没记录什么的，然后又搜索半天还是没有，发现自己又陷入了死一般的循坏。这样的状态其实很可怕，如果我们正常的生活都是这样的话，那我们肯定会丧失掉我们的创造力，我们的坚持力。然后发现自己的时间不留痕迹一样，又过去了一天。所以，在正常的生活中，我们一定要有一些别的什么东西来补偿我们，学会着去寻找乐趣，寻找成就感，让自己成就感至少还拥有，当一个人连成就感都没有了的时候，那他就非常容易挫败，从而带来更多的失败，这就是<strong>“自证预言”</strong>。</p>
-<p>所以，无论是成就感也好，乐趣也好，核心竞争力也罢，你一定要有所成长，不成长意味着你被时代抛弃了。而那种被抛弃的感觉很慢，慢到你根本没法觉察出来，80后，90后，而如今已经开始了00后的新时代，无论是什么时代，要想很好的活着，那就得成长。</p>
-<p>而成长究竟是什么，我也不知道，且走且探索……</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;你走了，只是少了个复印的人而已&quot;&gt;&lt;a href=&quot;#你走了，只是少了个复印的人而已&quot; class=&quot;headerlink&quot; title=&quot;你走了，只是少了个复印的人而已&quot;&gt;&lt;/a&gt;你走了，只是少了个复印的人而已&lt;/h2&gt;&lt;p&gt;@(A-01日记)&lt;/p&gt;
-&lt;p&gt;想
     
     </summary>
     
