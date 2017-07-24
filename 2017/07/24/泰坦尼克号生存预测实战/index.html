@@ -1,0 +1,920 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="R数据分析," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Chenkaifan's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="刚刚做这个实战的时候有点不知道该怎么办，于是只能够老老实实地看一下社群会员都是怎么做的，最后还是按照kaggle上面的方法模仿着做出来了，但是模仿也不容易，一开始就遇到了加载包的错误，并且是以前从来没有出现过的。因为以前用管理员模式安装包从来没有出现过类似的错误。但是这一次却出现了。
+1234#之前安装包一直产生的错误package &amp;apos;MASS&amp;apos; successfully un">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泰坦尼克号生存预测实战">
+<meta property="og:url" content="http://yoursite.com/2017/07/24/泰坦尼克号生存预测实战/index.html">
+<meta property="og:site_name" content="Chenkaifan's Blog">
+<meta property="og:description" content="刚刚做这个实战的时候有点不知道该怎么办，于是只能够老老实实地看一下社群会员都是怎么做的，最后还是按照kaggle上面的方法模仿着做出来了，但是模仿也不容易，一开始就遇到了加载包的错误，并且是以前从来没有出现过的。因为以前用管理员模式安装包从来没有出现过类似的错误。但是这一次却出现了。
+1234#之前安装包一直产生的错误package &amp;apos;MASS&amp;apos; successfully un">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/r%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%8E%AA%E6%96%BD.PNG">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/R%E5%8C%85%E7%9A%84%E7%9B%B8%E4%BA%92%E5%B1%8F%E8%94%BD.PNG">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE.PNG">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/%E6%9F%A5%E7%9C%8B%E6%9C%89%E5%A4%9A%E5%B0%91%E7%BC%BA%E5%A4%B1%E5%80%BC.PNG">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/Fsize_Rplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/FsizeD_Rplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/cabin_Rplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/cabinRplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/ageRplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/age_survivalRplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/model_Rplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/importance_Rplot.png">
+<meta property="og:image" content="http://7xkse6.com1.z0.glb.clouddn.com/%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E6%B1%82%E7%94%9F%E5%AD%98%E6%88%90%E7%BB%A9.PNG">
+<meta property="og:updated_time" content="2017-07-24T10:42:44.042Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="泰坦尼克号生存预测实战">
+<meta name="twitter:description" content="刚刚做这个实战的时候有点不知道该怎么办，于是只能够老老实实地看一下社群会员都是怎么做的，最后还是按照kaggle上面的方法模仿着做出来了，但是模仿也不容易，一开始就遇到了加载包的错误，并且是以前从来没有出现过的。因为以前用管理员模式安装包从来没有出现过类似的错误。但是这一次却出现了。
+1234#之前安装包一直产生的错误package &amp;apos;MASS&amp;apos; successfully un">
+<meta name="twitter:image" content="http://7xkse6.com1.z0.glb.clouddn.com/r%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%8E%AA%E6%96%BD.PNG">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"输入关键字","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/24/泰坦尼克号生存预测实战/"/>
+
+
+
+
+
+  <title> 泰坦尼克号生存预测实战 | Chenkaifan's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?37980ce674797b1857fd093a96a3ec25";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Chenkaifan's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学习学习再学习</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocapitalize="off" autocomplete="off" autocorrect="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/24/泰坦尼克号生存预测实战/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="kaifanchen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Chenkaifan's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                泰坦尼克号生存预测实战
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-24T00:00:00+08:00">
+                2017-07-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>刚刚做这个实战的时候有点不知道该怎么办，于是只能够老老实实地看一下社群会员都是怎么做的，最后还是按照kaggle上面的方法模仿着做出来了，但是模仿也不容易，一开始就遇到了加载包的错误，并且是以前从来没有出现过的。因为以前用管理员模式安装包从来没有出现过类似的错误。但是这一次却出现了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#之前安装包一直产生的错误</div><div class="line">package &apos;MASS&apos; successfully unpacked and MD5 sums checked</div><div class="line"></div><div class="line">Warning: unable to move temporary installation &apos;C:\Program Files\R\R-2.13.0\library\file6cae3bcf\MASS&apos; to &apos;C:\Program Files\R\R-2.13.0\library\MASS&apos;</div></pre></td></tr></table></figure>
+<p>解决办法就是如下，拖过谷歌最后找到了这个办法。但是刚刚开始对于这个采纳的答案不是很在意，只是尝试了答案的前一部分，后一部分措施没有尝试就觉得答案不是很对，于是又继续google，最后找到一个中文的答案，按照中文答案将R的安装路径权限放开，且杀毒软件也将R安装路径加入白名单，最后成功，才发现其实这个答案的解决办法和原来查出来的一摸一样。此外，我还会经常性地打错一些变量，导致出错，不过这个错误一般容易就能够通过Rstudio提示来找到错误。<br><img src="http://7xkse6.com1.z0.glb.clouddn.com/r%E8%BD%AF%E4%BB%B6%E5%8C%85%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5%E7%9A%84%E6%8E%AA%E6%96%BD.PNG" alt=""></p>
+<p>有时候有些包没有安装成功的时候会导致如下的错误。</p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/R%E5%8C%85%E7%9A%84%E7%9B%B8%E4%BA%92%E5%B1%8F%E8%94%BD.PNG" alt=""></p>
+<hr>
+<p>接下来就是具体的实践情况。</p>
+<h2 id="1-数据处理目标"><a href="#1-数据处理目标" class="headerlink" title="1. 数据处理目标"></a>1. 数据处理目标</h2><p>通过官方给的数据train 数据集来预测test数据集的生存状况，<code>survived = 0</code>表示死亡，<code>survived = 1</code>表示活下来了。<br>这个数据总共有1309个观测量，12个变量值。我们的目的就是要利用各变量与<code>survived</code>之间的关系来得出我们的结论。</p>
+<h2 id="2-数据预处理"><a href="#2-数据预处理" class="headerlink" title="2. 数据预处理"></a>2. 数据预处理</h2><p>载入我们后面处理数据需要用到的包，并且为了后面处理数据方便，我们将train和test合并到一个数据框里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#载入包</div><div class="line">library(ggplot2)</div><div class="line">library(ggthemes)</div><div class="line">library(dplyr)</div><div class="line">library(mice)</div><div class="line">library(scales)</div><div class="line">library(randomForest)</div><div class="line"></div><div class="line">#载入数据</div><div class="line">setwd(&quot;C:/Users/Kaifan/Documents/R_study/five&quot;)</div><div class="line">train &lt;- read.csv(&quot;train.csv&quot;,stringsAsFactors = FALSE)</div><div class="line">test &lt;- read.csv(&quot;test.csv&quot;,stringsAsFactors = FALSE)</div><div class="line">data &lt;- bind_rows(train,test)</div><div class="line"></div><div class="line">train.row &lt;- 1:nrow(train)</div><div class="line">test.row &lt;- (1+nrow(train)):(nrow(train)+nrow(test))</div><div class="line"></div><div class="line">#数据查看</div><div class="line">str(data)</div></pre></td></tr></table></figure>
+<p>然后我们查看数据，得到下面的各数据变量类型的一个预览。<br><img src="http://7xkse6.com1.z0.glb.clouddn.com/%E6%9F%A5%E7%9C%8B%E6%95%B0%E6%8D%AE.PNG" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">#对缺失值进行处理，包括缺失值的替换</div><div class="line">#先查看有哪些缺失值</div><div class="line"># attach(data)</div><div class="line"># missing &lt;- list(Pclass=nrow(data[is.na(Pclass),]))</div><div class="line"># missing$Name &lt;- nrow(data[is.na(Name),])</div><div class="line"># missing$Sex &lt;- nrow(data[is.na(Sex),])</div><div class="line"># missing$Age &lt;- nrow(data[is.na(Age),])</div><div class="line"># missing$SibSp &lt;- nrow(data[is.na(SibSp),])</div><div class="line"># missing$Parch &lt;- nrow(data[is.na(Parch),])</div><div class="line"># missing$Ticket &lt;- nrow(data[is.na(Ticket),])</div><div class="line"># missing$Fare &lt;- nrow(data[is.na(Fare),])</div><div class="line"># missing$Cabin &lt;- nrow(data[is.na(Cabin),])</div><div class="line"># missing$Embarked &lt;- nrow(data[is.na(Embarked),])</div><div class="line"># for(name in names(missing))&#123;</div><div class="line">#   if(missing[[name]] &gt; 0)&#123;</div><div class="line">#     print(paste(&apos;&apos;,name,&apos;missing&apos;,missing[[name]][1],&apos;values&apos;,sep = &apos; &apos;))</div><div class="line">#   &#125;</div><div class="line"># &#125;</div><div class="line"># detach(data)</div><div class="line">#此种方法查看缺失值较为复杂，且不一定正确，下面这种方法较好</div><div class="line">sapply(data,function(x) sum(is.na(x)))</div><div class="line">sapply(data,function(x) sum(x == &quot;&quot;))</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/%E6%9F%A5%E7%9C%8B%E6%9C%89%E5%A4%9A%E5%B0%91%E7%BC%BA%E5%A4%B1%E5%80%BC.PNG" alt=""></p>
+<p>从这里我们知道有些变量缺失值比较多，所以接下来就是对缺失值进行填补，利用中位数和平均值的方法。下面就进行具体的变量的处理。</p>
+<h2 id="3-特征工程"><a href="#3-特征工程" class="headerlink" title="3. 特征工程"></a>3. 特征工程</h2><p>从乘客的名字我们可以看出来，乘客的名字类似这样<code>Braund, Mr. Owen Harris</code>，一个逗号，然后空格再加一个头衔，后面再空格；这里我们可以利用字符串分解的正则表达式将头衔从名字中提取出来。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">#特征工程之一(名字)</div><div class="line">data$title &lt;- gsub(&apos;(.*,)|(\\..*)&apos;,&apos;&apos;,data$Name)</div><div class="line">#通过性别展示称呼头衔</div><div class="line">table(data$Sex,data$title)</div><div class="line"></div><div class="line">#将性别头衔进行整合</div><div class="line">rare_title &lt;- c(&quot;Capt&quot;,&quot;Col&quot;,&quot;Don&quot;,&quot;Dona&quot;,&quot;Dr&quot;,&quot;Jonkheer&quot;,&quot;Lady&quot;,&quot;Major&quot;,&quot;Rev&quot;,&quot;Sir&quot;,&quot;the Countess&quot;)</div><div class="line">data$title[data$title == &quot;Mlle&quot;] &lt;- &quot;Miss&quot;</div><div class="line">data$title[data$title == &quot;Ms&quot;] &lt;- &quot;Miss&quot;</div><div class="line">data$title[data$title == &quot;Mme&quot;] &lt;- &quot;Mrs&quot;</div><div class="line">data$title[data$title %in% rare_title] &lt;- &quot;Rare Title&quot;</div><div class="line"></div><div class="line">#再次通过性别展示头衔</div><div class="line">table(data$Sex,data$title)</div></pre></td></tr></table></figure>
+<p>到这里我们可以很清楚得看到各头衔的人数有多少了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##           Mr Mrs  Ms Rev Sir the Countess</div><div class="line">##   female   0 197   2   0   0            1</div><div class="line">##   male   757   0   0   8   1            0</div></pre></td></tr></table></figure></p>
+<p>接下来就是要把名字的姓给拆分出来，并查看家庭成员的大小对生存的影响，家庭成员指的是乘客和乘客的亲戚兄弟姐妹，父母孩子。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#分离姓名</div><div class="line">data$Surname &lt;- sapply(data$Name,function(x) strsplit(x,split = &apos;[,.]&apos;)[[1]][1])</div><div class="line">cat(paste(&apos;我们有 &lt;b&gt;&apos;,nlevels(factor(data$Surname)),&apos;&lt;/b&gt; 特别的姓。可能接下来我会</div><div class="line">          对这些名字非常感兴趣的&apos;))</div><div class="line"></div><div class="line">#考虑家庭成员间的生存率</div><div class="line">data$Fsize &lt;- data$SibSp + data$Parch + 1</div><div class="line">data$Family &lt;- paste(data$Surname,data$Fsize,sep = &quot;_&quot;)</div><div class="line"></div><div class="line">#可视化家庭成员数量对生存率的影响</div><div class="line">ggplot(data[1:891,],aes(x = Fsize,fill=factor(Survived))) +</div><div class="line">  geom_bar(stat = &apos;count&apos;,position = &apos;dodge&apos;) +</div><div class="line">  scale_x_continuous(breaks = c(1:11)) +</div><div class="line">  labs(x=&apos;Family Size&apos;) +</div><div class="line">  theme_few()</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/Fsize_Rplot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">#家庭成员数量大小对生存影响的另一种可视化方法</div><div class="line">data$FsizeD[data$Fsize == 1] &lt;- &quot;singleton&quot;</div><div class="line">data$FsizeD[data$Fsize &lt;5 &amp; data$Fsize &gt;1] &lt;- &quot;small&quot;</div><div class="line">data$FsizeD[data$Fsize &gt; 4] &lt;- &quot;large&quot;</div><div class="line"></div><div class="line">mosaicplot(table(data$FsizeD,data$Survived),main = &quot;Family size by Survival&quot;,shade = TRUE)</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/FsizeD_Rplot.png" alt=""></p>
+<p>接下来就是看乘客登船港口与生存之间到底存在着什么关系，从下面的ggplot2图中我们可以看到从S港口登船的第一阶层的乘客的花费与80美元刚好相符，所以我们可以预测缺失了登船港口信息的乘客的地址为“C”港口。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">#查看船舱对于生存的影响</div><div class="line">data$Cabin[1:28]</div><div class="line">strsplit(data$Cabin[2],NULL)[[1]]</div><div class="line">data$Deck &lt;- factor(sapply(data$Cabin,function(x) strsplit(x,NULL)[[1]][1]))</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#把缺失登船港口地址的乘客给去掉</div><div class="line">embark_fare &lt;- data %&gt;%</div><div class="line">  filter(PassengerId != 62 &amp; PassengerId != 830)</div><div class="line">#使用ggplot2函数来组合乘客，其阶层还有费用与生存率的联系</div><div class="line">ggplot(embark_fare,aes(x=Embarked,y=Fare,fill=factor(Pclass))) +</div><div class="line">  geom_boxplot() +</div><div class="line">  geom_hline(aes(yintercept = 80),colour = &apos;red&apos;,linetype = &apos;dashed&apos;,lwd = 2) +</div><div class="line">  scale_y_continuous(labels = dollar_format()) +</div><div class="line">  theme_few()</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/cabin_Rplot.png" alt=""></p>
+<p>然后接下来就是探索第三阶层，从S港口登船的人的平均船票的费用。用均值的方法。查询出来得到其平均费用为8美元，然后填补缺失的费用的数值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">#</div><div class="line">data$Embarked[c(62,830)] &lt;- &apos;C&apos;</div><div class="line">#在1044行费用缺失，查看一下具体的数值</div><div class="line">data[1044,]</div><div class="line">#可视化关于船舱人数的生存率</div><div class="line">ggplot(data[data$Pclass == &apos;3&apos; &amp; data$Embarked == &apos;S&apos;,],</div><div class="line">       aes(x=Fare)) +</div><div class="line">      geom_density(fill = &apos;#99d6ff&apos;,alpha=0.4) +</div><div class="line">      geom_vline(aes(xintercept=median(Fare,na.rm = TRUE)),</div><div class="line">                 colour=&apos;red&apos;,lintype=&apos;dashed&apos;,lwd=1) +</div><div class="line">      scale_x_continuous(labels = dollar_format()) +</div><div class="line">      theme_few()</div><div class="line"></div><div class="line">#填补缺失的船票费</div><div class="line">data$Fare[1044] &lt;- median(data[data$Pclass == &apos;3&apos; &amp; data$Embarked == &apos;S&apos;,]$Fare,na.rm = TRUE)</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/cabinRplot.png" alt=""></p>
+<p>最后就是估测其余的缺失值，得到这样的一个表。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">#将其他类型的变量转换为因子类型的变量</div><div class="line">factor_vars &lt;- c(&apos;PassengerId&apos;,&apos;Pclass&apos;,&apos;Sex&apos;,&apos;Embarked&apos;,&apos;title&apos;,</div><div class="line">                 &apos;Surname&apos;,&apos;Family&apos;,&apos;FsizeD&apos;)</div><div class="line">data[factor_vars] &lt;- lapply(data[factor_vars],function(x) as.factor(x))</div><div class="line">#设立一个随机种子，删掉一些没有多大用的变量</div><div class="line">set.seed(129)</div><div class="line">mice_mod &lt;- mice(data[,!names(data) %in%</div><div class="line">                        c(&quot;PassengerId&quot;,&quot;Name&quot;,&quot;Ticket&quot;,&quot;Cabin&quot;,&quot;Family&quot;,&quot;Surname&quot;,&quot;Survived&quot;)],method = &apos;rf&apos;)</div><div class="line">mice_output &lt;- complete(mice_mod)</div><div class="line"></div><div class="line">#</div><div class="line">par(mfrow=c(1,2))</div><div class="line">hist(data$Age,freq = FALSE,main = &apos;Age:Origin Data&apos;,col = &apos;darkgreen&apos;,ylim = c(0,0.04))</div><div class="line">hist(mice_output$Age,freq = FALSE,main = &apos;Age:Mice Output&apos;,col = &apos;lightgreen&apos;,ylim = c(0,0.04))</div><div class="line"></div><div class="line">#补充缺失的年龄值</div><div class="line">data$Age &lt;- mice_output$Age</div><div class="line">sum(is.na(data$Age))</div></pre></td></tr></table></figure></p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/ageRplot.png" alt=""></p>
+<p>同时，根据我们观看泰坦尼克号的经验可以得知，妇女和小孩是先走的，我们用ggplot2 制作出相关的图形，看看是不是这样的情况，从下面的图中我们可以看到小孩和妇女的生存率都比较高，而男性则非常地低，符合我们的常识；在这里，我们把年龄小于18的称之为小孩，而大于18的则为成年人；对于母亲来说，满足母亲的条件有以下几个：性别为女，有至少一个孩子，头衔不能为“Miss”，年龄大于18岁，其他的则为非母亲，在这里，非母亲我们不考虑男人等等，只考虑母亲这一个因素。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#查看年龄对生存的影响，区分性别</div><div class="line">ggplot(data[1:891,],aes(Age,fill = factor(Survived))) +</div><div class="line">  geom_histogram() +</div><div class="line">  facet_grid(.~Sex) +</div><div class="line">  theme_few()</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/age_survivalRplot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#对不同的年龄人群进行分类</div><div class="line">data$Child[data$Age &lt; 18] &lt;- &apos;Child&apos;</div><div class="line">data$Child[data$Age &gt;= 18] &lt;- &apos;Adult&apos;</div><div class="line">table(data$Child,data$Survived)</div><div class="line"></div><div class="line">data$Mother &lt;- &apos;Not Mother&apos;</div><div class="line">data$Mother[data$Age &gt; 18 &amp; data$Parch &gt; 0 &amp; data$title != &apos;Miss&apos; &amp; data$Sex == &apos;female&apos;] &lt;- &apos;Mother&apos;</div><div class="line">table(data$Mother,data$Survived)</div><div class="line"></div><div class="line">data$Child &lt;- factor(data$Child)</div><div class="line">data$Mother &lt;- factor(data$Mother)</div><div class="line">#</div><div class="line">md.pattern(data)</div></pre></td></tr></table></figure>
+<h2 id="4-建立模型，对test数据集进行预测"><a href="#4-建立模型，对test数据集进行预测" class="headerlink" title="4. 建立模型，对test数据集进行预测"></a>4. 建立模型，对test数据集进行预测</h2><p>到这里，我们基本把所有的缺失值都已经填补完毕了，接下来就是利用随机漫步算法建立模型，然后对test数据集进行预测。在这里我们也查看了关于各个变量之间与生存率之间的权重的关系，结果发现头衔title权重最高，为第一位，mother变量则排名最后。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#预测</div><div class="line">#分离数据</div><div class="line">train &lt;- data[1:891,]</div><div class="line">test &lt;- data[892:1309,]</div><div class="line">#建立模型</div><div class="line">set.seed(754)</div><div class="line">rf_model &lt;- randomForest(factor(Survived) ~ Pclass + Sex + Age + SibSp +</div><div class="line">                           Parch + Fare + Embarked + title +</div><div class="line">                           FsizeD + Child + Mother,</div><div class="line">                         data = train)</div><div class="line"></div><div class="line">plot(rf_model,ylim = c(0,0.36))</div><div class="line">legend(&apos;topright&apos;,colnames(rf_model$err.rate),col = 1:3,fill = 1:3)</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/model_Rplot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">#可视化变量的权重</div><div class="line">importance &lt;- importance(rf_model)</div><div class="line">varImportance &lt;- data.frame(Variables = row.names(importance),</div><div class="line">                            Importance = round(importance[,&apos;MeanDecreaseGini&apos;],2))</div><div class="line">rankImportance &lt;- varImportance %&gt;%</div><div class="line">  mutate(Rank = paste0(&apos;#&apos;,dense_rank(desc(Importance))))</div><div class="line"></div><div class="line">ggplot(rankImportance,aes(x=reorder(Variables,Importance),y=Importance,fill=Importance)) +</div><div class="line">  geom_bar(stat = &apos;identity&apos;) +</div><div class="line">  geom_text(aes(x=Variables,y=0.5,label=Rank),hjust = 0,vjust = 0.55,size = 4,col = &apos;red&apos;) +</div><div class="line">  labs(x=&apos;Variables&apos;) +</div><div class="line">  coord_flip() +</div><div class="line">  theme_few()</div></pre></td></tr></table></figure>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/importance_Rplot.png" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#最终预测，得出结论</div><div class="line">prediction &lt;- predict(rf_model,test)</div><div class="line">solution &lt;- data.frame(PassengerID = test$PassengerId,Survived = prediction)</div><div class="line">write.csv(solution,file = &apos;titannic_survived_prediction.csv&apos;,row.names = FALSE)</div></pre></td></tr></table></figure>
+<p>最后将预测的结果上传得到了kaggle官网，得分0.78947，排名2391，这也算是第一次模仿的结果，接下来要想想怎么优化，提升一下准确率，目前，只是有一个大概的印象，要真是全部的代码都自己写的话，自己构想思路，怕是根本不可能做的出来了。所以目前还是只能模仿，借鉴了。</p>
+<p><img src="http://7xkse6.com1.z0.glb.clouddn.com/%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E6%B1%82%E7%94%9F%E5%AD%98%E6%88%90%E7%BB%A9.PNG" alt=""></p>
+<p>鉴于知乎的写作体验不是很好，并且也不是markdown的格式，所以本文是用Atom编辑器写的，然后再复制到知乎上面，另外本文也放在个人博客地址上面，阅读体验稍微好一些。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/R数据分析/" rel="tag"># R数据分析</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/23/R_for_data_science_translation/" rel="next" title="数据可视化之上篇（R for Data Science之翻译）">
+                <i class="fa fa-chevron-left"></i> 数据可视化之上篇（R for Data Science之翻译）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="kaifanchen" />
+          <p class="site-author-name" itemprop="name">kaifanchen</p>
+           
+              <p class="site-description motion-element" itemprop="description">践行，成长，记录。</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/kevynchen" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/99kf" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/chen-kai-fan-1" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-zhihu"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-数据处理目标"><span class="nav-text">1. 数据处理目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-数据预处理"><span class="nav-text">2. 数据预处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-特征工程"><span class="nav-text">3. 特征工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-建立模型，对test数据集进行预测"><span class="nav-text">4. 建立模型，对test数据集进行预测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">kaifanchen</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+      search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="local-search-pop-overlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+      $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = $( "entry", xmlResponse ).map(function() {
+            return {
+              title: $( "title", this ).text(),
+              content: $("content",this).text(),
+              url: $( "url" , this).text()
+            };
+          }).get();
+          var $input = document.getElementById(search_id);
+          var $resultContent = document.getElementById(content_id);
+          $input.addEventListener('input', function(){
+            var matchcounts = 0;
+            var str='<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length > 1) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var content_index = [];
+                var data_title = data.title.trim().toLowerCase();
+                var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                var data_url = decodeURIComponent(data.url);
+                var index_title = -1;
+                var index_content = -1;
+                var first_occur = -1;
+                // only match artiles with not empty titles and contents
+                if(data_title != '') {
+                  keywords.forEach(function(keyword, i) {
+                    index_title = data_title.indexOf(keyword);
+                    index_content = data_content.indexOf(keyword);
+                    if( index_title >= 0 || index_content >= 0 ){
+                      isMatch = true;
+                      if (i == 0) {
+                        first_occur = index_content;
+                      }
+                    }
+
+                  });
+                }
+                // show search results
+                if (isMatch) {
+                  matchcounts += 1;
+                  str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                  var content = data.content.trim().replace(/<[^>]+>/g,"");
+                  if (first_occur >= 0) {
+                    // cut out 100 characters
+                    var start = first_occur - 20;
+                    var end = first_occur + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if(start == 0){
+                      end = 50;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    var match_content = content.substring(start, end);
+                    // highlight all keywords
+                    keywords.forEach(function(keyword){
+                      var regS = new RegExp(keyword, "gi");
+                      match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                    });
+
+                    str += "<p class=\"search-result\">" + match_content +"...</p>"
+                  }
+                  str += "</li>";
+                }
+              })};
+            str += "</ul>";
+            if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+            if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+            $resultContent.innerHTML = str;
+          });
+          proceedsearch();
+        }
+      });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
